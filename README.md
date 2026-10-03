@@ -24,7 +24,6 @@ In the Railway service's **Variables** panel, add:
 | `CLIENT_ID` | Discord application ID |
 | `DISCORD_OWNER_ID` | `1094063045866684496` (or your chosen owner ID) |
 | `MONGODB_URI` | MongoDB driver connection string |
-| `MONGODB_DATABASE` | `deaplo_discord_bot` (optional database name) |
 | `ACTIVITY_TEXT` | Optional; defaults to `DN Development Team` |
 
 Save variables and deploy/redeploy. Railway keeps the bot online and restarts it after a crash. Slash commands must be registered once after publishing code: run `npm run commands:deploy` locally with `DISCORD_TOKEN` and `CLIENT_ID` set in your local `.env`. Global Discord command updates may take time to appear.

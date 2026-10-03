@@ -8,10 +8,11 @@ const defaults = {
  conversation_enabled: false, analytics_enabled: false, retention_days: 90,
  leveling_enabled: false, text_xp_min: 5, text_xp_max: 12, level_channel: null, member_numbering: false
 };
-async function connect(uri, name) {
+async function connect(uri) {
  client = new MongoClient(uri, { serverSelectionTimeoutMS: 10000 });
  await client.connect();
- database = client.db(name || undefined);
+ // With no explicit database name, the MongoDB driver uses the database path from MONGODB_URI.
+ database = client.db();
  await Promise.all([
   database.collection('guild_settings').createIndex({ guild_id: 1 }, { unique: true }),
   database.collection('members').createIndex({ guild_id: 1, user_id: 1 }, { unique: true }),
