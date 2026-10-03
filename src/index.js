@@ -68,4 +68,8 @@ client.on(Events.GuildCreate,g=>store.settings(g.id).catch(e=>log('error','Faile
 client.on(Events.Error,e=>log('error','Discord client error',{error:e.message}));
 process.on('unhandledRejection',e=>log('error','Unhandled rejection',{error:String(e)}));
 process.on('SIGINT',async()=>{log('info','Shutting down');client.destroy();await store.close();process.exit(0);});
-store.connect(process.env.MONGODB_URI,process.env.MONGODB_DATABASE).then(()=>client.login(process.env.DISCORD_TOKEN)).catch(e=>{log('error','Could not connect to MongoDB',{error:e.message});process.exit(1);});
+store.connect(process.env.MONGODB_URI,process.env.MONGODB_DATABASE).then(()=>client.login(process.env.DISCORD_TOKEN)).catch(e=>{
+ console.error('Could not connect to MongoDB. Check MONGODB_URI, Atlas Network Access, and Database Access user.');
+ console.error(JSON.stringify({name:e.name,code:e.code,codeName:e.codeName,message:e.message}));
+ process.exit(1);
+});
